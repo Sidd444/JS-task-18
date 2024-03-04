@@ -47,10 +47,16 @@ console.log("Reduce: Aggregating elements of an array into a single value, e.g.,
 console.log("\nQ6 - Write an asynchronous function using async-await to fetch data from an API (you can use the JSONPlaceholder API) and log the result.");
 
 async function fetchData() {
-    fetch('https://jsonplaceholder.typicode.com/todos/1')
-    .then(response => response.json())
-    .then(json => console.log(json))
-    .catch(error => console.error('Error fetching data:', error));
+    try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+        if (!response.ok) {
+            throw new Error('Failed to fetch data');
+        }
+        const json = await response.json();
+        console.log(json);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
 }
 
 fetchData();
